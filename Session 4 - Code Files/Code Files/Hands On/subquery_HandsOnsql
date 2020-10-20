@@ -1,0 +1,35 @@
+--Checking data
+SELECT * 
+FROM movie_theatre;
+
+-- Details of all the theaters where Hindi movies are screened.
+SELECT *
+FROM theatre
+WHERE theatre_id IN 
+(
+    SELECT theatre_id
+    FROM movie_theatre
+    WHERE movie_id IN 
+        (SELECT movie_id 
+        FROM movie_language 
+        WHERE language_id = 'L0001'
+        )
+);
+
+ 
+ 
+--All upcoming movies with duration greater than average duration of all upcoming movies
+SELECT * FROM status;
+
+SELECT * 
+FROM movie m 
+WHERE DURATION > 
+( 
+  SELECT AVG(duration) 
+  FROM movie 
+  WHERE m.status_id = movie.status_id
+  );
+
+
+
+
